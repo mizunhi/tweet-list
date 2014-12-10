@@ -7,8 +7,7 @@ Usage
 =====
 
 ```
-<tweet-list url="http://yourdomain.com/path/to/your/twitter-api" searc="#hashtag"></tweet-list>
-
+<tweet-list url="http://yourdomain.com/path/to/your/twitter-api" search="#hashtag"></tweet-list>
 ```
 
 
