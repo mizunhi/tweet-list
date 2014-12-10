@@ -1,0 +1,34 @@
+
+:host {
+  display: block;
+}
+.blockquote-box{
+    margin-bottom: 20px;
+    .wrapper-header{
+        display: inline-block;
+        .pic{
+            display : inline-block;
+            vertical-align: top;
+            overflow : hidden;
+            margin-right: 20px;
+            img{
+                border-radius: 100%;
+            }
+        }
+        .name{
+            padding: 0;
+            line-height: 50px;
+            display: inline;
+        }
+    }
+    p{
+        padding-left: 70px;
+        margin: 0;
+        &.date{
+            font-size: x-small;
+            color: #777;
+            font-style: italic;
+        }
+    }
+
+}

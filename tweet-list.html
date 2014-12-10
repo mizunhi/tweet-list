@@ -1,0 +1,83 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<polymer-element name="html-echo" attributes="html">
+    <script>
+        Polymer('html-echo', {
+            htmlChanged: function() {
+                // WARNING: potential XSS vulnerability if `html` comes from an untrusted source
+                this.innerHTML = this.html;
+            }
+        });
+    </script>
+</polymer-element>
+
+<polymer-element name="tweet-list" attributes="search url">
+    <template>
+
+        <core-ajax
+            auto
+            url="{{url}}"
+            loading="true"
+            params='{"q":"{{search}}"}'
+            handleAs="json"
+            response="{{handleResponse}}">
+        </core-ajax>
+
+        <link rel="stylesheet" href="tweet-list.css">
+        <template if="{{!handleResponse}}">
+            <div align="center">
+                <paper-spinner class="red" active></paper-spinner>
+            </div>
+        </template>
+        <template if="{{handleResponse}}" repeat="{{tweet in handleResponse}}">
+            <div class="blockquote-box clearfix">
+                <div class="wrapper-header">
+                    <div class="pic">
+                        <img src="{{tweet.user.profile_image_url}}" alt="" class="" />
+                    </div>
+                    <h4 class="name">
+                        {{tweet.user.name}}
+                    </h4>
+                </div>
+                <p>
+                    <html-echo html="{{tweet.text | findLink}}"></html-echo>
+                </p>
+                <p class="date">
+                    {{tweet.created_at | formatDate}}
+                </p>
+
+            </div>
+        </template>
+
+    </template>
+
+
+    <script>
+        (function () {
+
+            Polymer({
+                // define element prototype here
+                url: this.url || window.location.origin + '/search/twitter',
+                search: this.search || 'cazzomene',
+                findLink: function(value){
+
+                    var regex = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/gi;
+
+                    value.replace(regex, function(url) {
+                        value = value.replace(url, "<a target=\"_blank\" href="+ url + ">" + url +"</a>");
+                    });
+
+                    return value;
+                },
+                formatDate: function(value){
+
+                    var m = moment(new Date(value).toISOString());
+                    return new moment(m).fromNow();
+                }
+
+            });
+
+        })();
+    </script>
+</polymer-element>
