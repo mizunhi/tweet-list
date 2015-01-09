@@ -1,9 +1,9 @@
 Tweet-list
 ==========
 
-A simple polymer element that lists a bunch of public tweets fetched by keywords
+A simple polymer element that collects and lists tweets based on a keyword search
 
-##Usage
+##How to use
 
 ```
 <tweet-list url="http://yourdomain.com/path/to/your/twitter-api" search="#hashtag"></tweet-list>
